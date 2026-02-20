@@ -11,7 +11,7 @@ It behaves like a real highlighter: drag your mouse over text and see a custom o
   <img width=40% src="https://github.com/mimoklef/highlighter-pen/blob/main/assets/subtitle.jpg?raw=true" />
 </a>
 
----
+
 
 ## ✨ Features
 
@@ -21,13 +21,13 @@ It behaves like a real highlighter: drag your mouse over text and see a custom o
 - No dependencies
 - Plug & play (1 script)
 
----
+
 
 ## 🚀 Demo
 
 [You can access this demo and try it yourself](https://www.morganbkf.com/highlighter-pen/)
 
----
+
 
 ## 📦 Installation
 
@@ -40,11 +40,10 @@ It behaves like a real highlighter: drag your mouse over text and see a custom o
 </script>
 ```
 
----
+
 
 ## 🙋🏻‍♂️ Author
 
----
 
 Made with ❤️ by [Morgan Bouyakhlef](https://www.morganbkf.com/)
 
