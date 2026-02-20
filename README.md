@@ -49,7 +49,7 @@ npm install highlighter-pen
 And import it with
 
 ```js
-import HighlighterPen from "highlighter-pen";
+const HighlighterPen = require("highlighter-pen");
 
 HighlighterPen().init();
 ```
