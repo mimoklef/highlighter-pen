@@ -33,3 +33,13 @@ It behaves like a real highlighter: drag your mouse over text and see a custom o
 <script>
   HighlighterPen().init();
 </script>
+```
+
+---
+
+## 🙋🏻‍♂️ Author
+
+---
+
+Made with ❤️ by [Morgan Bouyakhlef](https://www.morganbkf.com/)
+

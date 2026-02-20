@@ -1,7 +1,9 @@
 /*!
- * highlighter-pen
+ * Highlighter pen v1.0.0
  * Marker-like selection overlay using <marker> + optional native input selection yellow.
- * License: MIT
+ * https://github.com/mimoklef/highlighter-pen/
+ * © 2026 Morgan Bouyakhlef
+ * Released under the MIT License
  */
 (function (global) {
   "use strict";
