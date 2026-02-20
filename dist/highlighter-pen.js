@@ -9,7 +9,7 @@
   "use strict";
 
   const DEFAULTS = {
-    markerImage: "https://cdn.jsdelivr.net/gh/mimoklef/highlighter-pen@v1.0.2/assets/marker.png",
+    markerImage: "https://cdn.jsdelivr.net/gh/mimoklef/highlighter-pen@v1.0.3/assets/marker.png",
     markerZIndex: 10,                  // marker overlays on text
     hideNativeSelection: true,         // hide ::selection (so only your marker is visible)
     inputSelectionYellow: true,        // keep native selection in inputs/textarea and tint it yellow
@@ -62,7 +62,7 @@ marker{
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   padding: 0.8em 0;
-  mix-blend-mode: multiply;
+  mix-blend-mode: overlay;
   opacity: 1;
   z-index: ${opt.markerZIndex} !important;
 }

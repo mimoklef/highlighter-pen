@@ -1,6 +1,6 @@
 {
   "name": "highlighter-pen",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Marker-like text selection overlay (live) using JavaScript + CSS injection",
   "license": "MIT",
   "main": "dist/highlighter-pen.js",
