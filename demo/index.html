@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Short+Stack&display=swap" rel="stylesheet">
+  <title>Highlighter Pen — Cartoon Paper Demo</title>
+
+  <style>
+    :root{
+      --ink:#1f2430;
+      --paper:#fffdf6;
+      --paper2:#fff7db;
+      --line: rgba(60, 120, 255, .18);
+      --margin: rgba(255, 80, 110, .30);
+      --shadow: rgba(0,0,0,.12);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--ink);
+      font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          font-family:"Short Stack", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(255, 210, 90, .35), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(120, 230, 255, .28), transparent 55%),
+        radial-gradient(900px 500px at 50% 90%, rgba(255, 140, 200, .18), transparent 60%),
+        linear-gradient(180deg, #faf7ff, #f7fbff);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:36px 16px;
+    }
+
+    .wrap{
+      width:min(980px, 100%);
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin: 0 0 14px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:baseline;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .brand h1{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.3px;
+    }
+
+    .brand small{
+      opacity:.8;
+      font-size: 13px;
+    }
+
+    .pill{
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 2px dashed rgba(0,0,0,.18);
+      background: rgba(255,255,255,.7);
+      white-space:nowrap;
+    }
+
+    .paper{
+      border-radius: var(--radius);
+      position:relative;
+      overflow:hidden;
+      border: 2px solid rgba(0,0,0,.10);
+      background:
+        linear-gradient(90deg, transparent 0 54px, var(--margin) 54px 56px, transparent 56px 100%),
+        repeating-linear-gradient(
+          180deg,
+          transparent 0 30px,
+          var(--line) 30px 31px
+        ),
+        linear-gradient(180deg, var(--paper), var(--paper2));
+      box-shadow:
+        0 18px 40px var(--shadow),
+        0 2px 0 rgba(0,0,0,.06) inset;
+    }
+
+    .paper::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(900px 500px at 20% 20%, rgba(255,255,255,.8), transparent 55%),
+        radial-gradient(700px 450px at 80% 30%, rgba(255,255,255,.55), transparent 60%),
+        radial-gradient(700px 450px at 50% 90%, rgba(0,0,0,.05), transparent 60%);
+      mix-blend-mode: soft-light;
+    }
+
+    .paper::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.55;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(0,0,0,.03) 0 1px, transparent 1px 8px);
+    }
+
+    #content{
+      position:relative;
+      padding: 28px 28px 26px 74px;
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 22px;
+      line-height: 1.65;
+    }
+
+    #content h1{
+      margin: 0 0 12px;
+      font-size: 40px;
+      line-height: 1.1;
+      letter-spacing: .3px;
+      transform: rotate(-.4deg);
+      text-shadow: 2px 2px 0 rgba(0,0,0,.07);
+    }
+
+    #content p{
+      margin: 0 0 14px;
+      transform: rotate(.15deg);
+    }
+
+    form{
+      margin: 14px 0 12px;
+      display:grid;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.55);
+      border: 2px dashed rgba(0,0,0,.16);
+      box-shadow: 0 10px 20px rgba(0,0,0,.06);
+    }
+
+    label{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      font-weight: 650;
+    }
+
+    input, textarea, select, button{
+      font: inherit;
+      color: var(--ink);
+      border-radius: 14px;
+      border: 2px solid rgba(0,0,0,.16);
+      background: rgba(255,255,255,.9);
+      padding: 10px 12px;
+      box-shadow:
+        0 2px 0 rgba(0,0,0,.06) inset,
+        0 8px 14px rgba(0,0,0,.07);
+      outline: none;
+    }
+
+    input[type="checkbox"], input[type="radio"]{
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      box-shadow: none;
+      border-radius: 6px;
+      accent-color: #ffcc00;
+    }
+    input[type="radio"]{ border-radius: 50%; }
+
+    textarea{
+      width: min(620px, 100%);
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    select{
+      padding-right: 38px;
+    }
+
+    button{
+      cursor:pointer;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 10px 18px;
+      background: linear-gradient(180deg, #fff, #ededed);
+      border: 2px solid rgba(0,0,0,.18);
+      transition: transform .06s ease;
+    }
+    button:active{
+      transform: translateY(1px) scale(.99);
+    }
+
+    a{ color: #2a60ff; }
+
+    .note{
+      font-size: 14px;
+      opacity: .8;
+      margin-top: 6px;
+    }
+
+    .stamp{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 14px;
+      border: 2px solid rgba(0,0,0,.12);
+      background: rgba(255,255,255,.6);
+      box-shadow: 0 10px 20px rgba(0,0,0,.06);
+      transform: rotate(1.2deg);
+    }
+
+    .stamp strong{
+      letter-spacing:.2px;
+    }
+
+    .scribble{
+      display:inline-block;
+      border-bottom: 3px wavy rgba(255, 70, 120, .55);
+      padding-bottom: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Highlighter Pen ✍️</h1>
+        <small>drag-select text like on paper</small>
+      </div>
+      <div class="pill">Tip: try selecting across lines + into the form 👇</div>
+    </div>
+
+    <div class="paper">
+      <div id="content">
+        <h1>Highlight Challenge 🎯</h1>
+
+        <p>
+          Try to highlight <span class="scribble">this sentence</span> and keep dragging into the form below.
+          Does everything behave the same?
+        </p>
+
+        <form>
+          <p>
+            <label>
+              Your name:
+              <input type="text" value="Try selecting around me">
+            </label>
+          </p>
+
+          <p>
+            <label>
+              Your email:
+              <input type="email" placeholder="hello@example.com">
+            </label>
+          </p>
+
+          <p>
+            <label>
+              Secret message:
+              <textarea rows="3">Can you highlight inside and outside at the same time?</textarea>
+            </label>
+          </p>
+
+          <p>
+            <label>
+              <input type="checkbox"> Click me or highlight me
+            </label>
+          </p>
+
+          <p>
+            <label>
+              <input type="radio" name="game"> Option A
+            </label>
+            <label>
+              <input type="radio" name="game"> Option B
+            </label>
+          </p>
+
+          <p>
+            <label>
+              Choose something:
+              <select>
+                <option>Try selecting me</option>
+                <option>Or this one</option>
+              </select>
+            </label>
+          </p>
+
+          <p>
+            <button type="button">I'm just a button</button>
+          </p>
+        </form>
+
+        <p>
+          Now try selecting from this text into the form and back out. Some elements behave differently.
+        </p>
+
+        <p>
+          A mixed line with an <input type="text" value="inline field"> inside normal text,
+          plus <strong>bold</strong> and <em>italic</em>.
+        </p>
+
+        <p>
+          Bonus level:
+          <span contenteditable="true" style="padding:6px 10px;border:2px dashed rgba(0,0,0,.18);border-radius:12px;background:rgba(255,255,255,.7);box-shadow:0 8px 14px rgba(0,0,0,.06);">
+            You can edit me and try to highlight here
+          </span>
+        </p>
+
+        <p class="note">
+          <span class="stamp">🧪 <strong>Goal:</strong> can you break the highlighter? 😏</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!--Import script-->
+  <script src="../dist/highlighter-pen.js"></script>
+
+  <script>
+  // init script
+  HighlighterPen().init();
+  </script>
+</body>
+</html>
