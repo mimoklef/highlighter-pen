@@ -34,13 +34,25 @@ It behaves like a real highlighter: drag your mouse over text and see a custom o
 ### CDN (recommended)
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mimoklef/highlighter-pen@v1.0.0/dist/highlighter-pen.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mimoklef/highlighter-pen@v1.0.2/dist/highlighter-pen.js"></script>
 <script>
   HighlighterPen().init();
 </script>
 ```
 
+### NPM
 
+```bash
+npm install highlighter-pen
+```
+
+And import it with
+
+```js
+import HighlighterPen from "highlighter-pen";
+
+HighlighterPen().init();
+```
 
 ## 🙋🏻‍♂️ Author
 
