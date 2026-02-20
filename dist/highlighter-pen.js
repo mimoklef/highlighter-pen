@@ -7,7 +7,7 @@
   "use strict";
 
   const DEFAULTS = {
-    markerImage: "../assets/marker.png",
+    markerImage: "https://cdn.jsdelivr.net/gh/mimoklef/highlighter-pen@main/assets/marker.png",
     markerZIndex: 10,                  // marker overlays on text
     hideNativeSelection: true,         // hide ::selection (so only your marker is visible)
     inputSelectionYellow: true,        // keep native selection in inputs/textarea and tint it yellow
