@@ -1,5 +1,5 @@
 /*!
- * Highlighter pen v1.0.0
+ * Highlighter pen v1.0.4
  * Marker-like selection overlay using <marker> + optional native input selection yellow.
  * https://github.com/mimoklef/highlighter-pen/
  * © 2026 Morgan Bouyakhlef
@@ -9,12 +9,12 @@
   "use strict";
 
   const DEFAULTS = {
-    markerImage: "https://cdn.jsdelivr.net/gh/mimoklef/highlighter-pen@v1.0.3/assets/marker.png",
-    markerZIndex: 10,                  // marker overlays on text
-    hideNativeSelection: true,         // hide ::selection (so only your marker is visible)
-    inputSelectionYellow: true,        // keep native selection in inputs/textarea and tint it yellow
+    markerImage: "https://cdn.jsdelivr.net/gh/mimoklef/highlighter-pen@v1.0.4/assets/marker.png",
+    markerZIndex: 10,
+    hideNativeSelection: true,
+    inputSelectionYellow: true,
     inputSelectionColor: "rgba(255,235,59,0.95)",
-    exclude: "input, textarea, select, button, label" // clicking these cancels selection
+    exclude: "input, textarea, select, button, label"
   };
 
   function createStyle(id, cssText) {
@@ -46,7 +46,7 @@
     let padBottom = 0;
     let destroyed = false;
 
-    let onSelectionChange, onScroll, onResize, onPointerDown;
+    let onSelectionChange, onScroll, onResize, onPointerDown, onKeyDown;
 
     function injectStyles() {
       createStyle(
@@ -62,7 +62,7 @@ marker{
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   padding: 0.8em 0;
-  mix-blend-mode: overlay;
+  mix-blend-mode: multiply;
   opacity: 1;
   z-index: ${opt.markerZIndex} !important;
 }
@@ -120,7 +120,6 @@ input::-moz-selection, textarea::-moz-selection { background: ${opt.inputSelecti
         return;
       }
 
-      // Keep native selection (yellow) inside text inputs/textarea
       const ae = document.activeElement;
       if (isTextLikeInput(ae)) {
         clearOverlays();
@@ -129,7 +128,6 @@ input::-moz-selection, textarea::-moz-selection { background: ${opt.inputSelecti
 
       const range = sel.getRangeAt(0);
 
-      // avoid nesting markers
       const sp = range.startContainer.parentElement;
       const ep = range.endContainer.parentElement;
       if ((sp && sp.closest("marker")) || (ep && ep.closest("marker"))) return;
@@ -152,8 +150,6 @@ input::-moz-selection, textarea::-moz-selection { background: ${opt.inputSelecti
         m.style.display = "block";
         m.style.pointerEvents = "none";
         m.style.margin = "0";
-
-        // avoid double-padding (already included in top/height)
         m.style.padding = "0";
 
         document.body.appendChild(m);
@@ -184,12 +180,33 @@ input::-moz-selection, textarea::-moz-selection { background: ${opt.inputSelecti
         const el = e.target && e.target.closest(opt.exclude);
         if (!el) return;
 
-        // keep native selection inside text-like inputs/textarea
         if (isTextLikeInput(el)) return;
 
         cancelSelection();
       };
 
+      // Ensure a clean selection state before browser "select all"
+      onKeyDown = (e) => {
+        const key = (e.key || "").toLowerCase();
+        const isSelectAll = (e.ctrlKey || e.metaKey) && !e.shiftKey && key === "a";
+        if (!isSelectAll) return;
+
+        const ae = document.activeElement;
+
+        if (isTextLikeInput(ae)) {
+          clearOverlays();
+          return;
+        }
+
+        clearOverlays();
+
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount) {
+          sel.removeAllRanges();
+        }
+      };
+
+      document.addEventListener("keydown", onKeyDown, true);
       document.addEventListener("selectionchange", onSelectionChange);
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onResize);
@@ -206,6 +223,7 @@ input::-moz-selection, textarea::-moz-selection { background: ${opt.inputSelecti
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("pointerdown", onPointerDown, true);
+      document.removeEventListener("keydown", onKeyDown, true);
     }
 
     const api = { init, draw, clear: clearOverlays, cancelSelection, destroy, options: opt };
@@ -215,7 +233,6 @@ input::-moz-selection, textarea::-moz-selection { background: ${opt.inputSelecti
   global.HighlighterPen = HighlighterPen;
 })(typeof window !== "undefined" ? window : this);
 
-// --- npm / node export (CommonJS) ---
 if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
   module.exports = globalThis.HighlighterPen;
 }
